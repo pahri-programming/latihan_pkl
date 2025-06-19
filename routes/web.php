@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+//import Controller
+use App\Http\Controllers\MyController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,3 +36,18 @@ Route::get('search/{keyword?}', function($key = null){
 Route::get('toko/{barang?}/{kode?}', function ($barang = null,$kode = null) {
     return view('toko', compact('barang','kode'));
 });
+//route buku
+Route::get('buku', [MyController::class, 'index']);
+// tambah buku
+Route::get('buku/create', [MyController::class, 'create']);
+Route::post('buku', [MyController::class, 'store']);
+// show
+Route::get('buku/{id}', [MyController::class, 'show']);
+//edit & update
+Route::get('buku/{id}/edit', [MyController::class, 'edit']);
+Route::put('buku/{id}', [MyController::class, 'update']);
+//delete
+Route::delete('buku/{id}', [MyController::class, 'destroy']);
+
+
+
