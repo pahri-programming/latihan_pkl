@@ -26,6 +26,7 @@
                                         <th>Harga</th>
                                         <th>Stok</th>
                                         <th>Gambar</th>
+                                        <th>Deskripsi</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -42,6 +43,8 @@
                                                     <img src="{{ Storage::url($data->image) }}" alt=""
                                                         style="width: 100px; height:100px;">
                                                 @endif
+                                            </td>
+                                            <td>{{ $data->description }}</td>
                                             <td>
                                                 <a href="{{ route('product.edit', $data->id) }}"
                                                     class="btn btn-sm btn-warning">

@@ -1,4 +1,4 @@
-@extends('layouts.backend')Add commentMore actions
+@extends('layouts.backend')
 @section('content')
 <div class="container-fluid">
     <div class="row">
