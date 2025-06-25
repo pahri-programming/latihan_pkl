@@ -57,10 +57,16 @@ use App\Http\Controllers\FrontendController;
 
 //Route guest(tamu) / member
 Route::get('/',[FrontendController::class,'index']);
-Route::get('/product',[FrontendController::class,'product']);
-Route::get('/product/{product}', [FrontendController::class, 'singleProduct']);
+Route::get('/product',[FrontendController::class,'product'])->name('product.index');
+Route::get('/product/{product}', [FrontendController::class, 'singleProduct'])->name('product.show');
+Route::get('/product/category/{slug}',[FrontendController::class, 'filterByCategory'])->name('product.filter');
+Route::get('/seacrh',[FrontendController::class ,'search'])->name('product.search');
 Route::get('/about', [FrontendController::class, 'about']);
-Route::get('/cart', [FrontendController::class, 'cart']);
+// cart
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/add-to-cart/{product}',[CartController::class, 'addTocart'])->name('cart.add');
+Route::put('/cart/update/{id}',[CartController::class,'updateCart'])->name('cart.update');
+Route::delete('/cart/{id}',[CartController::class, 'remove'])->name('cart.remove');
 
 
 
@@ -69,10 +75,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // route untuk admin /backend
-Route::group(['prefix'=>'admin', 'middleware'=>['auth',Admin::class]] ,function(){
+Route::group(['prefix'=>'admin','as' => 'backend.', 'middleware'=>['auth',Admin::class]] ,function(){
     Route::get('/', [BackendController::class,'index']);
     //crud
     Route::resource('/category',CategoryController::class);
     Route::resource('/product', ProductController::class);
+    
 
 });
