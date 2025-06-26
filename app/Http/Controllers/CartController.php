@@ -13,6 +13,7 @@ class CartController extends Controller
     public function index()
     {
         $cartItems = Cart::with('product')->where('user_id', auth::id())->get();
+        return view('cart', compact('cartItems'));
     }
 
     public function addToCart(Request $request, $id)
@@ -75,7 +76,7 @@ class CartController extends Controller
         }
         //hitung total harga
         $total = $cartItems->sum(function ($item) {
-            return $item->qty * $utem->product->price;
+            return $item->qty * $item->product->price;
         });
         //simpan order
         $order = Order::create([

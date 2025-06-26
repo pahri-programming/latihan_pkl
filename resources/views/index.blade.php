@@ -144,12 +144,20 @@
                                         </li>
 
                                         <li>
-                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                title="Add To Cart" data-bs-original-title="Add To Cart">
+                                            <a href="{{ route('cart.add', $data->id) }}"
+                                                onclick="event.preventDefault(); document.getElementById('add-to-cart-form-{{ $data->id }}').submit();"
+                                                data-bs-toggle="tooltip" title="Add To Cart">
                                                 <i class="fas fa-shopping-cart"></i>
                                             </a>
-                                        </li>
 
+                                            <form id="add-to-cart-form-{{ $data->id }}"
+                                                action="{{ route('cart.add', $data->id) }}"
+                                                method="POST" class="d-none">
+                                                @csrf
+                                                <input type="hidden" name="qty" value="1">
+                                            </form>
+
+                                        </li>
                                     </ul>
                                 </div>
 
