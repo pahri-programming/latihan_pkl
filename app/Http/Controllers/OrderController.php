@@ -10,7 +10,7 @@ class OrderController extends Controller
     // OrderController.php
     public function index()
     {
-        $orders = Order::with('products')->where('user_id', auth())->id()->latest()->get();
+        $orders = Order::with('products')->where('user_id', auth()->id())->latest()->get();
         return view('orders', compact('orders'));
     }
 

@@ -80,11 +80,29 @@ class CartController extends Controller
         });
         //simpan order
         $order = Order::create([
-            'user_id'     => auth()->id(),
+            'user_id'     => Auth::id(),
             'order_code'  => 'ORD-' . strtoupper(Str::random(8)),
             'total_price' => $total,
             'status'      => 'pending',
         ]);
-    }
 
+        // Simpan detail order ke pivot order_product
+        foreach ($cartItems as $item) {
+            // Kurangi stok
+            $product = Product::find($item->product_id);
+            $product->stock -= $item->qty;
+            $product->save();
+
+            $order->products()->attach($item->product_id, [
+                'qty'   => $item->qty,
+                'price' => $item->product->price,
+            ]);
+        }
+
+        // Hapus isi keranjang
+        Cart::where('user_id', auth()->id())->delete();
+        toast('Pesanan berhasil dibuat!', 'success');
+        return redirect()->route('orders.index');
+
+    }
 }

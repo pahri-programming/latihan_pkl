@@ -16,7 +16,7 @@
                         </a>
                     </div>
                     <div class="card-body">
-                        <div class="table table-reponsive">
+                        <div class="table-reponsive">
                             <table class="table" id="dataCategory">
                                 <thead>
                                     <tr>
@@ -40,8 +40,8 @@
                                             <td>{{ $data->stock }}</td>
                                             <td scope="row">
                                                 @if ($data->image)
-                                                    <img src="{{ Storage::url($data->image) }}" alt=""
-                                                        style="width: 100px; height:100px;">
+                                                <img src="{{ Storage::url($data->image) }}" alt=""
+                                                style="width: 100% !important; height: 250px !important; object-fit: cover !important; border-radius: 8px !important;">                                           
                                                 @endif
                                             </td>
                                             <td>{{ $data->description }}</td>

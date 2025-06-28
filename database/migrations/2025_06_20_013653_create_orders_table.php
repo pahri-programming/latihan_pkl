@@ -17,16 +17,16 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('order_code')->unique();
             $table->integer('total_price');
-            $table->enum('status',['pending','completed','cancel']);
+            $table->enum('status',['pending','success','cancel']);
             $table->timestamps();
         });
 
         Schema::create('order_product', function(Blueprint $table){
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->integer('qty');
             $table->integer('price');
             $table->timestamps();

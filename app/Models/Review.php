@@ -9,7 +9,7 @@ class Review extends Model
     public $felliable = ['user_id','point','comment','produk_id'];
 
     public function user(){
-        return $this->belongTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function product()

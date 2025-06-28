@@ -10,7 +10,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Backend\OrderController as BackendOrderController;
 
-
+use App\Http\Controllers\ReviewController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Route;
 
@@ -75,6 +75,8 @@ Route::delete('/cart/{id}', [CartController::class, 'remove'])->name('cart.remov
 //order
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+//review
+Route::post('/product/{product}/review', [ReviewController::class, 'store'])->middleware('auth')->name('review.store');
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -85,7 +87,7 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
     //crud
     Route::resource('/category', CategoryController::class);
     Route::resource('/product', ProductController::class);
-    Route::get('/orders', [BackendOrderController::class, 'index'])->name('order.index');
-    Route::get('/orders/{id}', [BackendOrderController::class, 'show'])->name('order.show');
+    Route::resource('/orders', BackendOrderController::class);
+    Route::put('/orders/{id}/status',[BackendOrderController::class, 'updateStatus'])->name('orders.updateStatus');
 
 });
